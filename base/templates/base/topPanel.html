@@ -1,6 +1,29 @@
-<h1><a href="{% url 'base:home' %}">Go home</a></h1>
 
+<style>
+    .topbar {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        background-color: aquamarine;
+        text-align: center;
+
+    }
+
+</style>
+
+
+<div class="topbar">
+    <h3><a href="{% url 'base:home' %}">Go home</a></h3>
 <form action="{% url 'base:home' %}">
-    <input type="text" name="q" placeholder="Search rooms...">
+    <h3><input type="text" name="q" placeholder="Search rooms..."></h3>
 </form>
+<div class="login">
+    {% if request.user.is_authenticated %}
+    <h3><a href="{% url 'base:logout' %}">Logout -- {{ request.user.username }}</a></h3>
+    {% else %}
+    <h3><a href="{% url 'base:login' %}">Login</a></h3>
+{% endif %}
+</div>
+
+
 <hr>
+</div>

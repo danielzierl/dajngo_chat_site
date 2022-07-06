@@ -1,0 +1,9 @@
+<h3>Recent activity: </h3>
+{% for message in page_messages %}
+    <small><a href="{% url 'base:user_profile' message.user.id %}">@{{ message.user }}</a>  {{ message.created|timesince }} ago {% if request.user == message.user %}<a href="{% url 'base:delete_message' message.id %}">Delete</a>{% endif %}
+        <br>wrote:</small>
+
+    <br>
+    <p>{{ message }}</p>
+    <hr>
+{% endfor %}

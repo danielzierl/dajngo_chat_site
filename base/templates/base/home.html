@@ -3,42 +3,34 @@
 
 
 <style>
-    .home-container{
+    .home-container {
         display: grid;
-        grid-template-columns: 1fr 5fr;
+        grid-template-columns: 0.5fr 3fr 1fr;
+        grid-gap: 2rem;
     }
+    .left_panel{
+        background-color: lightblue;
+
+    }
+
 </style>
+
 
 
 <div class="home-container">
 
-    <div>
-        <h3>Browse Topics</h3>
-        <hr>
-            <div>
-                <a href="{% url 'base:home' %}">All</a>
-            </div>
-        {% for topic in topics %}
-            <div>
-                <a href="{% url 'base:home' %}?q={{ topic.name }}">{{ topic }}</a>
-            </div>
-        {% endfor %}
+    <div class="left_panel">
+        {% include 'base/topics_component.html' %}
     </div>
     <div>
         <h5>Found rooms: {{ room_count }}</h5>
         <a href="{% url 'base:create_room' %}">Create room</a>
     <hr>
-    {% for room in rooms %}
-        <div>
-            <a href="{% url 'base:update_room' room.id %}">Update</a>
-            <a href="{% url 'base:delete_room' room.id %}">Delete</a><br>
-            <span>@{{ room.host.username }}</span>
-            <h2><a href="{% url 'base:detail' room.id%}">{{ room.name }}</a> </h2>
-            <small>{{ room.topic }}</small>
-            <hr>
-        </div>
+     {% include 'base/feed_component.html' %}
+    </div>
 
-    {% endfor %}
+    <div>
+        {% include 'base/activity_component.html' %}
     </div>
 
 </div>
