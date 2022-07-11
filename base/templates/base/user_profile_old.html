@@ -1,0 +1,25 @@
+{% extends 'base/main.html' %}
+
+
+{% block content %}
+<main class="layout layout--3">
+    <div class="container">
+      {% include 'base/topics_component.html' %}
+        
+      <div>
+        <div class="roomList__header">
+            <h2 class="username">{{ user.username }}'s page</h2>
+        </div>
+        
+        {% include 'base/feed_component.html' %}
+      </div>
+      
+  
+      {% include 'base/activity_component.html' %}
+    </div>
+  </main>
+
+
+
+
+{% endblock %}

@@ -60,8 +60,9 @@ def home(request):
         Q(topic__name__contains=q) | Q(name__contains=q) | Q(description__contains=q) | Q(host__username__contains=q))
     room_count = rooms.count()
     topics = Topic.objects.all()
+    room_count_all = Room.objects.all().count()
     page_messages = Message.objects.all().order_by('-created')
-    context = {'rooms': rooms, 'topics': topics, 'room_count': room_count,'page_messages':page_messages}
+    context = {'rooms': rooms, 'topics': topics, 'room_count': room_count,'page_messages':page_messages,'room_count_all':room_count_all}
     return render(request, 'base/home.html', context)
 
 
@@ -72,8 +73,7 @@ def logoutUser(request):
 
 def detail(request, pk):
     room: Room = Room.objects.get(id=pk)
-    messagesList = room.message_set.all().order_by('-created')
-
+    messagesList = room.message_set.all().order_by('created')
     participants = room.participants.all()
     context = {'room_messages': messagesList, 'room': room, 'participants': participants}
 
@@ -85,21 +85,22 @@ def detail(request, pk):
         )
         room.participants.add(request.user)
         return redirect('base:detail', room.id)
-
     return render(request, 'base/roomDetail.html', context)
 
 
 @login_required(login_url='base:login')
 def createRoom(request):
-    form = RoomForm()
+    response = request.POST
     if request.method == 'POST':
-        form = RoomForm(data=request.POST)
+        response = request.POST
+        room = Room.objects.create(name=response['room_name'], topic=response['topic'], )
         if form.is_valid():
             instance = form.save(commit=False)
             instance.host = request.user
             instance.save()
             return redirect('base:home')
-    context = {'form': form}
+
+    context = {}
     return render(request, 'base/room_form.html', context)
 
 
@@ -149,5 +150,6 @@ def userProfile(request,pk):
     rooms = user.room_set.all()
     topics = Topic.objects.all()
     page_messages = user.message_set.all()
-    context = {'user':user, 'rooms':rooms,'topics':topics,'page_messages':page_messages}
+    room_count_all = Room.objects.all().count()
+    context = {'user':user, 'rooms':rooms,'topics':topics,'page_messages':page_messages,'room_count_all':room_count_all}
     return render(request, 'base/user_profile.html',context)

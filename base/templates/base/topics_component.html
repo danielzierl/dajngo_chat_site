@@ -1,18 +1,28 @@
-<style>
-     .topics{
-        background-color: lightblue;
-        text-align: center;
-    }
-</style>
+<!-- Topics Start -->
 <div class="topics">
-    <h3>Browse Topics</h3>
-        <hr>
-            <div>
-                <a href="{% url 'base:home' %}">All</a>
-            </div>
+    <div class="topics__header">
+      <h2>Browse Topics</h2>
+    </div>
+    <ul class="topics__list">
+      <li>
+        <a href="{% url 'base:home' %}" class="active">All <span>{{ room_count_all }}</span></a>
         {% for topic in topics %}
-            <div>
-                <a href="{% url 'base:home' %}?q={{ topic.name }}">{{ topic }}</a>
-            </div>
-        {% endfor %}
-</div>
+      </li>
+      <li>
+          <a href="{% url 'base:home' %}?q={{ topic.name }}">{{ topic }}<span>{{topic.room_set.all.count}}</span></a>
+      </li>
+      {% endfor %}
+    </ul>
+    <a class="btn btn--link" href="topics.html">
+      More
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+        <title>chevron-down</title>
+        <path d="M16 21l-13-13h-3l16 16 16-16h-3l-13 13z"></path>
+      </svg>
+    </a>
+  </div>
+  <!-- Topics End -->
+
+
+
+

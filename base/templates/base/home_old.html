@@ -1,0 +1,38 @@
+{% extends 'base/main.html' %}
+{% block content %}
+
+
+<style>
+    .home-container {
+        display: grid;
+        grid-template-columns: 0.5fr 3fr 1fr;
+        grid-gap: 2rem;
+    }
+    .left_panel{
+        background-color: lightblue;
+
+    }
+
+</style>
+
+
+
+<div class="home-container">
+
+    <div class="left_panel">
+        {% include 'base/topics_component.html' %}
+    </div>
+    <div>
+        <h5>Found rooms: {{ room_count }}</h5>
+        <a href="{% url 'base:create_room' %}">Create room</a>
+    <hr>
+     {% include 'base/feed_component.html' %}
+    </div>
+
+    <div>
+        {% include 'base/activity_component.html' %}
+    </div>
+
+</div>
+
+{% endblock %}

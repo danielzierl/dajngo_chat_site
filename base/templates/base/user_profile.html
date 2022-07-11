@@ -1,38 +1,49 @@
-{% extends 'base/main.html' %}
+  {% extends 'base/main.html' %}
+  {%load static %}
 
+  {% block content %}
+  <main class="profile-page layout layout--3">
+    <div class="container">
+      {% include 'base/topics_component.html' %}
 
-{% block content %}
-    <style>
-        .content-wrapper{
-            display: grid;
-            grid-template-columns: 0.5fr 3fr 1fr;
-            grid-gap: 2rem;
-
-        }
-        .username {
-            text-align: center;
-        }
-        .left_panel{
-        background-color: lightblue;
-
-    }
-    </style>
-
-    <div class="content-wrapper">
-        <div class="left_panel">
-            {% include 'base/topics_component.html' %}
+      <!-- Room List Start -->
+      <div class="roomList">
+        <div class="profile">
+          <div class="profile__avatar">
+            <div class="avatar avatar--large active">
+              <img src="{% static 'images/avatar.svg' %}" />
+            </div>
+          </div>
+          <div class="profile__info">
+            <h3>{{user.username}}</h3>
+            <p>@{{user.username}}</p>
+            <a href="edit-user.html" class="btn btn--main btn--pill">Edit Profile</a>
+          </div>
+          <div class="profile__about">
+            <h3>About</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur illo tenetur
+              facilis sunt nemo debitis quisquam hic atque aut? Ducimus alias placeat optio
+              accusamus repudiandae quis ab ex exercitationem rem?
+            </p>
+          </div>
         </div>
 
-        <div>
-            <h2 class="username">{{ user.username }}'s page</h2>
-            {% include 'base/feed_component.html' %}
+        <div class="roomList__header">
+          <div>
+            <h2>Rooms Hosted by {{user.username}}</a>
+            </h2>
+          </div>
         </div>
+        {% include 'base/feed_component.html' %}
+      </div>
+      <!-- Room List End -->
 
-        <div>
-            {% include 'base/activity_component.html' %}
-        </div>
+      {% include 'base/activity_component.html' %}
     </div>
+  </main>
+</body>
 
-
+</html>
 
 {% endblock %}
